@@ -23,7 +23,7 @@
   "scripts": {
     "test": "mocha --recursive --exit",
     "start": "node index.js",
-    "build-database": "node src/script/buildDatabase.js",
+    "import-music": "node src/script/import-music.js",
     "nodemon": "nodemon index.js"
   },
   "author": "",
