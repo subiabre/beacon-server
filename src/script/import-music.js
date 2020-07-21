@@ -108,7 +108,7 @@ readline.on('line', async (line) => {
             new ConsoleString('\nLocal music updated.')
                 .log();
 
-            process.exit(1);
+            process.exit(0);
         }
     });
 });
