@@ -90,7 +90,7 @@ readline.on('line', async (line) => {
     fs.exists(line, async (exists) => {
         if (!exists) {
             readline.setPrompt(
-                new ConsoleString('Please type a valid directory path: ')
+                new ConsoleString(`'${line}' is not a directory. Please type a valid directory path: `)
                     .color(ConsoleString.colors.FgYellow)
                     .string
             );
@@ -100,7 +100,7 @@ readline.on('line', async (line) => {
         if (exists) {
             let folder = path.normalize(line);
 
-            new ConsoleString(`Updating beacon-server database with music in: ${folder}.\n`)
+            new ConsoleString(`Updating beacon-server database with music in: '${folder}'.\n`)
                 .log();
 
             await build(line);
