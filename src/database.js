@@ -9,7 +9,7 @@ class Database
 {
     constructor()
     {
-        this.db = new Sequelize('sqlite:memory');
+        this.db = new Sequelize('sqlite:memory', {logging: false});
     }
 
     connection()
