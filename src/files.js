@@ -25,7 +25,7 @@ class Files
         
                 // Recursion on sub-folders
                 if (status.isDirectory()) {
-                    let subFolder = await walkFolder(target);
+                    let subFolder = await this.walkFolder(target);
                     folder = folder.concat(subFolder);
                 }
 
