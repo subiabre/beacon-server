@@ -27,7 +27,7 @@ const build = async (dir) =>
             setTimeout(async () => {
                 await addSong(file, dir);
 
-                consoleProgress.addValue(index);
+                consoleProgress.addValue(index + 1);
 
                 process.stdout.cursorTo(62);
                 process.stdout.write(`${index + 1}/${folder.length}`);
@@ -109,7 +109,7 @@ readline.on('line', async (line) => {
 
             await build(line);
 
-            new ConsoleString('Local music updated.')
+            new ConsoleString('\nLocal music updated.')
                 .tab()
                 .log();
 
