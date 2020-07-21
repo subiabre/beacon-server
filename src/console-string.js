@@ -31,7 +31,7 @@ class ConsoleString
      * Get an string with x padding to the left
      * @param {Number} padding 
      */
-    tab(padding = 8)
+    tab(padding = 0)
     {
         this.string = ' '.repeat(padding) + this.string;
 
