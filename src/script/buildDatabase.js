@@ -1,12 +1,11 @@
 "use strict";
 
 const readline = require('readline').createInterface(process.stdin, process.stdout);
-const db = require('../database');
 const fs = require('fs');
 const path = require('path');
 const files = require('../files');
 const mm = require('music-metadata');
-const ConsoleProgressBar = require('../console-progress');
+const ConsoleProgressBar = require('console-progress-bar');
 const ConsoleString = require('../console-string');
 
 /**
@@ -29,7 +28,7 @@ const build = async (dir) =>
 
                 consoleProgress.addValue(index + 1);
 
-                process.stdout.cursorTo(62);
+                process.stdout.cursorTo(55);
                 process.stdout.write(`${index + 1}/${folder.length}`);
 
                 // Resolve at end of loop
@@ -83,7 +82,6 @@ const addSong = async (file, dir) =>
 
 readline.setPrompt(
     new ConsoleString('Please type in the path to your music folder: ')
-        .tab()
         .string
 );
 readline.prompt();
@@ -93,7 +91,6 @@ readline.on('line', async (line) => {
         if (!exists) {
             readline.setPrompt(
                 new ConsoleString('Please type a valid directory path: ')
-                    .tab()
                     .color(ConsoleString.colors.FgYellow)
                     .string
             );
@@ -104,13 +101,11 @@ readline.on('line', async (line) => {
             let folder = path.normalize(line);
 
             new ConsoleString(`Updating beacon-server database with music in: ${folder}.\n`)
-                .tab()
                 .log();
 
             await build(line);
 
             new ConsoleString('\nLocal music updated.')
-                .tab()
                 .log();
 
             process.exit(1);
