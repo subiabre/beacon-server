@@ -21,7 +21,10 @@
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "test": "mocha --recursive --exit"
+    "test": "mocha --recursive --exit",
+    "start": "node index.js",
+    "build-database": "node src/script/buildDatabase.js",
+    "nodemon": "nodemon index.js"
   },
   "author": "",
   "license": "ISC"
