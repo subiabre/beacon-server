@@ -15,6 +15,7 @@ const ConsoleString = require('../console-string');
 const build = async (dir) =>
 {
     let folder = await files.walkFolder(dir);
+    let songs = 0;
 
     return new Promise((resolve, reject) => {
         folder.forEach(async (file, index) => {
@@ -24,12 +25,14 @@ const build = async (dir) =>
             });
 
             setTimeout(async () => {
-                await addSong(file, dir);
+                let isSong = await addSong(file, dir);
+
+                if (isSong) songs += 1;
 
                 consoleProgress.addValue(index + 1);
 
                 process.stdout.cursorTo(55);
-                process.stdout.write(`${index + 1}/${folder.length}`);
+                process.stdout.write(`${index + 1}/${folder.length} -> ${songs} songs.`);
 
                 // Resolve at end of loop
                 if (index + 1 == folder.length) {
@@ -47,37 +50,44 @@ const build = async (dir) =>
  */
 const addSong = async (file, dir) =>
 {
-    let audio = await files.isAudio(file);
+    return new Promise(async (resolve, reject) => {
+        let audio = await files.isAudio(file);
 
-    if (audio) {
-        let Song = require('../model/song');
-        let data = await mm.parseFile(file)
-            .then((metadata) => {
-                let song = {
-                    name: metadata.common.title,
-                    artist: metadata.common.artist,
-                    release: metadata.common.album,
-                    file: file
-                };
+        if (audio) {
+            let Song = require('../model/song');
+            let data = await mm.parseFile(file)
+                .then((metadata) => {
+                    let song = {
+                        name: metadata.common.title,
+                        artist: metadata.common.artist,
+                        release: metadata.common.album,
+                        file: file
+                    };
 
-                return song;
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-
-        try {
-            let song = Song.build(data);
-
-            song.save()
-                .then(() => {})
+                    return song;
+                })
                 .catch((err) => {
-                    //console.log(err);
+                    reject(err);
                 });
-        } catch (err) {
-            console.log(err.message);
+
+            try {
+                let song = Song.build(data);
+
+                song.save()
+                    .then(() => {
+                        resolve(true);
+                    })
+                    .catch((err) => {
+                        resolve(false);
+                        //console.log(err);
+                    });
+            } catch (err) {
+                console.log(err.message);
+            }
+        } else {
+            resolve(false);
         }
-    }
+    });
 }
 
 readline.setPrompt(
