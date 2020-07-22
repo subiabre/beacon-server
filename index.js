@@ -11,6 +11,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(express.static(__dirname + '/client/build'));
+
 // Socket.io
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
@@ -24,6 +26,10 @@ const ip = require('ip');
 const ConsoleString = require('./src/console-string');
 const Song = require('./src/model/song');
 const ConsoleColors = ConsoleString.colors;
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/client/index.html');
+});
 
 app.get('/songs', async (req, res) => {
     const songs = await Song.findAll();
