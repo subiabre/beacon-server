@@ -27,4 +27,6 @@ const Song = sequelize.define('Song', {
     }
 });
 
+Song.sync();
+
 module.exports = Song;
