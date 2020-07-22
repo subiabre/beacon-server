@@ -1,5 +1,8 @@
 "use strict";
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 // Express
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -20,7 +23,7 @@ const ip = require('ip');
 
 const ConsoleString = require('./src/console-string');
 const Song = require('./src/model/song');
-const ConsoleColors = ConsoleString.colors
+const ConsoleColors = ConsoleString.colors;
 
 app.get('/songs', async (req, res) => {
     const songs = await Song.findAll();
