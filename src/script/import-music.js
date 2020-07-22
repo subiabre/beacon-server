@@ -99,6 +99,7 @@ readline.on('line', async (line) => {
 
         if (exists) {
             let folder = path.normalize(line);
+                folder = path.resolve(folder);
 
             new ConsoleString(`Updating beacon-server database with music in: '${folder}'.\n`)
                 .log();
