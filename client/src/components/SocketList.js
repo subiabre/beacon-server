@@ -1,6 +1,5 @@
 import React from 'react';
 import Socket from 'socket.io-client';
-const socket = Socket();
 
 class SocketList extends React.Component
 {
@@ -11,11 +10,14 @@ class SocketList extends React.Component
         this.state = {
             sockets: []
         };
+
+        this.socket = Socket();
+        
     }
 
     componentDidMount()
     {
-        socket.on('socket:update', (sockets) => {
+        this.socket.on('socket:update', (sockets) => {
             this.setState({
                 sockets: sockets
             });
@@ -24,7 +26,7 @@ class SocketList extends React.Component
 
     socketLi(li)
     {
-        const id = socket.id;
+        const id = this.socket.id;
         
         if (li.id === id) {
             return (
