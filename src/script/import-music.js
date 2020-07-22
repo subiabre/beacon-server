@@ -104,7 +104,7 @@ readline.on('line', async (line) => {
             new ConsoleString(`Updating beacon-server database with music in: '${folder}'.\n`)
                 .log();
 
-            await build(line);
+            await build(folder);
 
             new ConsoleString('\nLocal music updated.')
                 .log();
