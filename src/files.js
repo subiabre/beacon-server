@@ -1,8 +1,7 @@
 "use strict";
 
-const fs = require('fs');
-const path = require('path');
 const fileType = require('file-type');
+const getFiles = require('node-recursive-directory');
 
 /**
  * Helper with music files and folders
@@ -15,31 +14,7 @@ class Files
      */
     async walkFolder(dir)
     {
-        let folder = new Array();
-        let files = fs.readdirSync(dir);
-        
-        return new Promise((resolve, reject) => {
-            files.forEach(async (file, index) => {
-                let target = path.normalize(dir + '/' + file);
-                let status = await fs.statSync(target);
-        
-                // Recursion on sub-folders
-                if (status.isDirectory()) {
-                    let subFolder = await this.walkFolder(target);
-                    folder = folder.concat(subFolder);
-                }
-
-                // Only push files
-                if (status.isFile()) {
-                    folder.push(target);
-                }
-
-                // Resolve promise at end of loop
-                if (index + 1 == files.length) {
-                    resolve(folder);
-                }
-            });
-        });
+        return await getFiles(dir);
     };
 
     /**

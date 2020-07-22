@@ -10,6 +10,7 @@
     "file-type": "^14.6.2",
     "ip": "^1.1.5",
     "music-metadata": "^7.0.0",
+    "node-recursive-directory": "^1.2.0",
     "sequelize": "^6.3.3",
     "socket.io": "^2.3.0",
     "sqlite3": "^5.0.0"
