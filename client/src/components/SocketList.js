@@ -1,4 +1,5 @@
 import React from 'react';
+import '../assets/css/SocketList.css';
 
 class SocketList extends React.Component
 {

@@ -1,0 +1,21 @@
+.SocketList {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: #333;
+}
+
+.SocketList .Socket {
+    width: calc(100% - 4em);
+    padding: 1em 2em;
+    font-size: 0.9em;
+    color: #f0f8ff;
+    border-top: 1px solid #000;
+}
+
+.SocketList .Socket.Current {
+    background-color: #666;
+}
