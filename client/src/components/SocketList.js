@@ -1,5 +1,4 @@
 import React from 'react';
-import Socket from 'socket.io-client';
 
 class SocketList extends React.Component
 {
@@ -11,8 +10,7 @@ class SocketList extends React.Component
             sockets: []
         };
 
-        this.socket = Socket();
-        
+        this.socket = props.socket;
     }
 
     componentDidMount()
