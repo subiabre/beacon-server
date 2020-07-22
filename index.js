@@ -14,6 +14,7 @@ const io = require('socket.io')(http);
 const ip = require('ip');
 const dotenv = require('dotenv');
 const db = require('./src/database').connection();
+const userAgent = require('user-agent-parse');
 const ConsoleString = require('./src/console-string');
 const ConsoleColors = ConsoleString.colors;
 
@@ -30,9 +31,10 @@ let socketList = new Array();
 io.on('connection', (socket) => {
     const socketMin = {
         id: socket.id,
-        userAgent: socket.handshake.headers['user-agent']
+        userAgent: userAgent.parse(socket.handshake.headers['user-agent'])
     };
 
+    //console.log(socketList);
     socketList.push(socketMin);
 
     // Sync socket list on new sockets
@@ -42,7 +44,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         let socketIndex = socketList.indexOf(socketMin);
 
-        socketList.splice(socketIndex + 1);
+        socketList = socketList.splice(socketIndex + 1);
 
         io.emit('socket:update', socketList);
     });
