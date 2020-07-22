@@ -3,3 +3,6 @@
 
 # Database
 memory*
+
+# Environment configuration
+.env
