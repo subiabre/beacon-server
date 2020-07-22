@@ -1,70 +1,36 @@
 "use strict";
 
-const dotenv = require('dotenv');
-dotenv.config();
-
 // Express
 const express = require('express');
 const bodyParser = require('body-parser');
+const routes = require('./src/routes');
 const app = express();
+
+// Socket.io
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+
+// Others
+const ip = require('ip');
+const dotenv = require('dotenv');
+const db = require('./src/database').connection();
+const ConsoleString = require('./src/console-string');
+const ConsoleColors = ConsoleString.colors;
+
+dotenv.config();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static(__dirname + '/client/build'));
 
-// Socket.io
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+app.use(routes);
 
-// Sequelize
-const db = require('./src/database').connection();
-const { Op } = require('sequelize');
-
-const ip = require('ip');
-
-const ConsoleString = require('./src/console-string');
-const Song = require('./src/model/song');
-const ConsoleColors = ConsoleString.colors;
-
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/client/index.html');
+io.on('connection', (socket) => {
+    // Socket is ready
 });
 
-app.get('/songs', async (req, res) => {
-    const songs = await Song.findAll();
-
-    res.send({songs});
-});
-
-app.get('/songs/:title', async (req, res) => {
-    const songs = await Song.findAll({
-        where: {
-            name: {
-                [Op.like]: req.params.title
-            }
-        }
-    });
-
-    res.send({songs});
-});
-
-app.get('/artist/:name', async (req, res) => {
-    const songs = await Song.findAll({
-        where: {
-            artist: {
-                [Op.or]: {
-                    [Op.like]: req.params.name,
-                    [Op.startsWith]: req.params.name,
-                    [Op.eq]: req.params.name
-                }
-            }
-        }
-    });
-
-    res.send({songs});
-});
-
+// Launch server
 const listener = http.listen(process.env.PORT || 3127, async () => {
     new ConsoleString(`beacon-server now live.\n`)
         .log();
