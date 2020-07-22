@@ -14,7 +14,7 @@ const io = require('socket.io')(http);
 
 // Sequelize
 const db = require('./src/database').connection();
-db.sync({force: true, logging: false});
+const { Op } = require('sequelize');
 
 const ip = require('ip');
 
@@ -24,6 +24,34 @@ const ConsoleColors = ConsoleString.colors
 
 app.get('/songs', async (req, res) => {
     const songs = await Song.findAll();
+
+    res.send({songs});
+});
+
+app.get('/songs/:title', async (req, res) => {
+    const songs = await Song.findAll({
+        where: {
+            name: {
+                [Op.like]: req.params.title
+            }
+        }
+    });
+
+    res.send({songs});
+});
+
+app.get('/artist/:name', async (req, res) => {
+    const songs = await Song.findAll({
+        where: {
+            artist: {
+                [Op.or]: {
+                    [Op.like]: req.params.name,
+                    [Op.startsWith]: req.params.name,
+                    [Op.eq]: req.params.name
+                }
+            }
+        }
+    });
 
     res.send({songs});
 });
