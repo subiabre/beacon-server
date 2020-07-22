@@ -26,8 +26,46 @@ app.use(express.static(__dirname + '/client/build'));
 
 app.use(routes);
 
+let socketList = new Array();
 io.on('connection', (socket) => {
-    // Socket is ready
+    const socketMin = {
+        id: socket.id,
+        userAgent: socket.handshake.headers['user-agent']
+    };
+
+    socketList.push(socketMin);
+
+    // Sync socket list on new sockets
+    io.emit('socket:update', socketList);
+
+    // Remove socket and sync socket list on disconnect
+    socket.on('disconnect', () => {
+        let socketIndex = socketList.indexOf(socketMin);
+
+        socketList.splice(socketIndex + 1);
+
+        io.emit('socket:update', socketList);
+    });
+
+    // Send play signal to certain socket
+    socket.on('play:atSocket', (data) => {
+        io.to(data.socketId).emit('play:song', data.song);
+    });
+
+    // Send play signal to all sockets
+    socket.on('play:allSockets', (song) => {
+        io.emit('play:song', song);
+    });
+
+    // Send pause signal to certain socket
+    socket.on('pause:atSocket', (data) => {
+        io.to(data.socketId).emit('pause:song', data.song);
+    });
+
+    // Send pause singal to all sockets
+    socket.on('pause:allSockets', (song) => {
+        io.emit('pause:song', song);
+    });
 });
 
 // Launch server
