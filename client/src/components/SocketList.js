@@ -30,7 +30,7 @@ class SocketList extends React.Component
             return (
                 <li
                     title = 'Current connection'
-                    className = 'Socket-Current'
+                    className = 'Socket Current'
                     key = {li.id}
                 >
                     {li.userAgent.name} @ {li.userAgent.os} {li.userAgent.device_type}
