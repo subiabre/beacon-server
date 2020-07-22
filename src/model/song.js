@@ -22,7 +22,8 @@ const Song = sequelize.define('Song', {
 
     file: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     }
 });
 
