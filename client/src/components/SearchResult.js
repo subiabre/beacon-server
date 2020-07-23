@@ -17,12 +17,13 @@ class SearchResult extends React.Component
 
         return (
             <li
-                className = 'Search-Result'
+                className = 'SearchResult'
                 key = {result.id}
             >
-                <p>{result.name}</p>
-                <p className='Result-Release'>{result.release}</p>
-                <p className='Result-Artist'>{result.artist}</p>
+                <img title={result.release} src={'/image/' + result.id}></img>
+                <p title={result.name}>{result.name}</p>
+                <p title={result.release} className='Result-Release'>in {result.release}</p>
+                <p title={result.artist} className='Result-Artist'>by {result.artist}</p>
             </li>
         )
     }
