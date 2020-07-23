@@ -27,6 +27,19 @@ router.get('/songs/:title', async (req, res) => {
     res.send({songs});
 });
 
+router.get('/image/:id', async (req, res) => {
+    const song = await Song.findAll({
+        where: {
+            id: req.params.id
+        }
+    });
+
+    let image = Buffer.from(song[0].image, 'binary');
+
+    res.setHeader('Content-Type', 'image/jpeg');
+    res.send(image);
+});
+
 router.get('/artist/:name', async (req, res) => {
     const songs = await Song.findAll({
         where: {
