@@ -27,7 +27,9 @@
     "start": "node index.js",
     "import-music": "node src/script/import-music.js",
     "build-client": "cd client; npm run build",
-    "nodemon": "nodemon index.js"
+    "build-launch": "npm run build-client; npm start",
+    "nodemon": "nodemon index.js",
+    "postinstall": "cd client; npm install"
   },
   "author": "",
   "license": "ISC"
