@@ -28,6 +28,7 @@ router.get('/song/:id/:stream?', async (req, res) => {
 
         res.setHeader('Content-Type', song.mime);
         res.setHeader('Content-Length', songStat.size);
+        res.setHeader('Accept-Ranges', 'bytes');
 
         songStream.pipe(res);
         return;
