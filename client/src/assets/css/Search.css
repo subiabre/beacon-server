@@ -1,0 +1,63 @@
+.SearchBar {
+    display: flex;
+}
+
+.SearchBar input {
+    padding: 1em 2em;
+    border: 0;
+    text-align: left;
+    background-color: #333;
+    color: aliceblue;
+    border-bottom: 1px solid #000;
+    float: right;
+}
+
+.SearchBar input[type="text"] {
+    width: 100%;
+    background-color: #000;
+    text-shadow: 1px 1px 3px #000;
+    float: left;
+}
+
+.SearchResults {
+    width: calc(80% - 2em);
+    height: calc(70vh - 4em);
+    padding: 2em;
+    margin: 0;
+    list-style: none;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: #212121;
+    float: right;
+}
+
+.SearchResult {
+    width: calc(20vw - 4em);
+    margin: 0 1.5em 1.5em 0;
+    text-align: left;
+    background-color: #ffffff;
+    color: #333030;
+    white-space: nowrap;
+    overflow: hidden;
+    float: left;
+}
+
+.SearchResult img {
+    width: 100%;
+    background-color: #000;
+}
+
+.SearchResult p {
+    padding: 0.5em;
+    margin: 0;
+}
+
+.Result-Release {
+    font-size: 0.9em;
+    color: #444444;
+}
+
+.Result-Artist {
+    font-size: 0.9em;
+    color: #91a0b0;
+}

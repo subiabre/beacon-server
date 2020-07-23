@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchResult from './SearchResult';
+import '../assets/css/Search.css';
 
 class SearchBar extends React.Component
 {
@@ -22,11 +23,11 @@ class SearchBar extends React.Component
             query: event.target.value
         });
 
-        fetch('/artist/' + event.target.value)
+        fetch('/' + event.target.value)
             .then(res => res.json())
             .then(res => {
                 this.setState({
-                    results: res.songs
+                    results: res
                 });
             });
     }
@@ -43,7 +44,7 @@ class SearchBar extends React.Component
         return (
             <React.Fragment>
                 <form
-                    className = 'Search-Bar'
+                    className = 'SearchBar'
                     onSubmit = {this.handleSubmit}
                 >
                     <input
@@ -56,7 +57,7 @@ class SearchBar extends React.Component
                     <input type='submit' value='Search'></input>
                 </form>
 
-                <ul className = 'Search-Results'>
+                <ul className = 'SearchResults'>
                     {results.map((result) => (
                         <SearchResult result = {result} />
                     ))}
