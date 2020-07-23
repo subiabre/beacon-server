@@ -4,9 +4,36 @@ const Song = require('./model/song');
 const { Op } = require('sequelize');
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
 
 router.get('/', (req, res) => {
     res.sendFile(__dirname + '/client/index.html');
+});
+
+router.get('/song/:id/:stream?', async (req, res) => {
+    const song = await Song.findOne({
+        where: {
+            id: req.params.id
+        }
+    });
+
+    if (!song) {
+        res.sendStatus(404);
+        return;
+    }
+
+    if (req.params.stream) {
+        const songStat = fs.statSync(song.file);
+        const songStream = fs.createReadStream(song.file);
+
+        res.setHeader('Content-Type', song.mime);
+        res.setHeader('Content-Length', songStat.size);
+
+        songStream.pipe(res);
+        return;
+    }
+
+    res.send(song);
 });
 
 router.get('/songs/:by/:name', async (req, res) => {
