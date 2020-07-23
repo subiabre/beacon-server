@@ -95,7 +95,7 @@ router.get('/image/:id', async (req, res) => {
         res.sendStatus(404);
     }
 
-    let image = Buffer.from(song[0].image, 'binary');
+    let image = Buffer.from(song.image, 'binary');
 
     res.setHeader('Content-Type', 'image/jpeg');
     res.send(image);
