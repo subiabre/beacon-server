@@ -40,6 +40,31 @@ router.get('/image/:id', async (req, res) => {
     res.send(image);
 });
 
+router.get('/release/:name', async (req, res) => {
+    const songs = await Song.findAll({
+        where: {
+            release: {
+                [Op.or]: {
+                    [Op.like]: req.params.name,
+                    [Op.startsWith]: req.params.name,
+                    [Op.eq]: req.params.name
+                }
+            }
+        }
+    });
+
+    const data = songs[0];
+
+    const release = {
+        name: data.release,
+        artist: data.artist,
+        image: data.image,
+        songs: songs,
+    }
+
+    res.send(release);
+});
+
 router.get('/artist/:name', async (req, res) => {
     const songs = await Song.findAll({
         where: {
