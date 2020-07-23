@@ -29,6 +29,11 @@ const Song = sequelize.define('Song', {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
+    },
+
+    mime: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 });
 
