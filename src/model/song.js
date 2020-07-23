@@ -20,6 +20,11 @@ const Song = sequelize.define('Song', {
         allowNull: true
     },
 
+    image: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+
     file: {
         type: DataTypes.STRING,
         allowNull: false,
