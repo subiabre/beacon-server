@@ -62,7 +62,7 @@ const addSong = async (file, dir) =>
                         artist: metadata.common.artist,
                         release: metadata.common.album,
                         image: metadata.common.picture[0].data,
-                        file: encodeURI(file)
+                        file: file
                     };
 
                     return song;
