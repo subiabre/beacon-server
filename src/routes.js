@@ -25,6 +25,7 @@ router.get('/songs/:by/:name', async (req, res) => {
 
     if (songs.length > 0) {
         res.send(songs);
+        return;
     }
 
     res.sendStatus(404);
@@ -47,6 +48,7 @@ router.get('/release/:name', async (req, res) => {
         }
 
         res.send(release);
+        return;
     }
 
     res.sendStatus(404);
@@ -77,6 +79,7 @@ router.get('/artist/:name', async (req, res) => {
                 }
     
                 res.send(artist);
+                return;
             }
         });
     }
@@ -93,6 +96,7 @@ router.get('/image/:id', async (req, res) => {
 
     if (!song) {
         res.sendStatus(404);
+        return;
     }
 
     let image = Buffer.from(song.image, 'binary');
