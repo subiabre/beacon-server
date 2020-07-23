@@ -29,17 +29,17 @@
     overflow-y: scroll;
     background-color: #212121;
     float: right;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .SearchResult {
-    width: calc(20vw - 4em);
-    margin: 0 1.5em 1.5em 0;
+    width: calc(14vw - 4em);
+    margin: 1em;
     text-align: left;
     background-color: #ffffff;
     color: #333030;
-    white-space: nowrap;
     overflow: hidden;
-    float: left;
 }
 
 .SearchResult img {
