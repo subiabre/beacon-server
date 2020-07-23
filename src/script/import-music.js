@@ -4,6 +4,7 @@ const readline = require('readline').createInterface(process.stdin, process.stdo
 const fs = require('fs');
 const path = require('path');
 const files = require('../files');
+const fileType = require('file-type');
 const mm = require('music-metadata');
 const ConsoleProgressBar = require('console-progress-bar');
 const ConsoleString = require('../console-string');
@@ -44,6 +45,20 @@ const build = async (dir) =>
 }
 
 /**
+ * Get the mime type of the given file
+ * @param {String} file Path to file
+ */
+const getMime = async (file) => {
+    return fileType.fromFile(file)
+        .then((info) => {
+            return info.mime
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+}
+
+/**
  * Adds a single song file to the database
  * @param {String} file Location to file
  * @param {String} dir Directory name
@@ -56,13 +71,16 @@ const addSong = async (file, dir) =>
         if (audio) {
             let Song = require('../model/song');
             let data = await mm.parseFile(file)
-                .then((metadata) => {
+                .then(async (metadata) => {
+                    let mime = await getMime(file);
+
                     let song = {
                         name: metadata.common.title,
                         artist: metadata.common.artist,
                         release: metadata.common.album,
                         image: metadata.common.picture[0].data,
-                        file: file
+                        file: file,
+                        mime: mime
                     };
 
                     return song;
