@@ -113,21 +113,22 @@ class Player extends React.Component
                     <p>{this.state.song.name}</p>
                     <p>from {this.state.song.release} </p>
                     <p>by {this.state.song.artist} </p>
-                </div>
-                <audio
-                    ref = "audio"
-                    onPlay = {this.handlePlay}
-                    onPause = {this.handlePause}
-                    onVolumeChange = {this.handleVolume}
-                    className = "PlayerAudio"
-                    controls
-                >
-                    <source
-                        src = {'/song/' + song.id + '/stream'}
-                        type = {song.mime}
+
+                    <audio
+                        ref = "audio"
+                        onPlay = {this.handlePlay}
+                        onPause = {this.handlePause}
+                        onVolumeChange = {this.handleVolume}
+                        className = "PlayerAudio"
+                        controls
                     >
-                    </source>
-                </audio>
+                        <source
+                            src = {'/song/' + song.id + '/stream'}
+                            type = {song.mime}
+                        >
+                        </source>
+                    </audio>
+                </div>
             </React.Fragment>
         );
     }

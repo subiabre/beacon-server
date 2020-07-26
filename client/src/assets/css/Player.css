@@ -1,8 +1,10 @@
 .Player {
+    height: calc(22vh - 2em);
     padding: 1em;
     text-align: left;
     display: flex;
     flex-flow: column;
+    overflow: hidden;
 }
 
 .Player .Playing {
