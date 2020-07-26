@@ -28,7 +28,9 @@ class Player extends React.Component
             }, () => {
                 this.refs.audio.pause();
                 this.refs.audio.load();
+                this.refs.audio.muted = true;
                 this.refs.audio.play();
+                this.refs.audio.muted = false;
             });
         });
 
