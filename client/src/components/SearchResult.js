@@ -12,7 +12,7 @@ class SearchResult extends React.Component
     }
 
     handleClick = () => {
-        this.props.getSong(this.state.song)
+        this.props.getSong(this.state.song);
     }
 
     render()

@@ -38,7 +38,7 @@ class Search extends React.Component
 
     getSong = (song) =>
     {
-        this.props.socket.emit('play:allSocket', song);
+        this.props.socket.emit('play:allSockets', song);
     }
 
     render()
