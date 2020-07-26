@@ -49,6 +49,10 @@ io.on('connection', (socket) => {
         io.emit('socket:update', socketList);
     });
 
+    socket.on('socket:target', (target) => {
+        io.to(target.id).emit('socket:origin', socketMin);
+    });
+
     // Send play signal to certain socket
     socket.on('play:atSocket', (data) => {
         io.to(data.socketId).emit('play:song', data.song);
@@ -61,7 +65,7 @@ io.on('connection', (socket) => {
 
     // Send time signal to certain socket
     socket.on('play:atSocket:time', (data) => {
-        socket.broadcast.to(data.socketId).emit('play:time', data.time);
+        io.to(data.socketId).emit('play:time', data.time);
     });
 
     // Send time signal to all other sockets
@@ -71,7 +75,7 @@ io.on('connection', (socket) => {
 
     // Send pause signal to certain socket
     socket.on('pause:atSocket', (data) => {
-        socket.broadcast.to(data.socketId).emit('pause', data.song);
+        io.to(data.socketId).emit('pause', data.song);
     });
 
     // Send pause singal to all sockets
@@ -81,7 +85,7 @@ io.on('connection', (socket) => {
 
     // Send volume signal to certain socket
     socket.on('volume:atSocket', (data) => {
-        socket.broadcast.to(data.socketId).emit('volume', data.volume);
+        io.to(data.socketId).emit('volume', data.volume);
     });
 
     // Send volume signal to all sockets
