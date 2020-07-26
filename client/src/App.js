@@ -32,7 +32,9 @@ class App extends React.Component
   {
     return (
       <div className="App">
-        <Search socket = {SocketClient}/>
+        <Search 
+          target = {this.state.socketTarget}
+          socket = {SocketClient}/>
         <SocketList 
           getSocket = {this.getSocket}
           socket = {SocketClient}
