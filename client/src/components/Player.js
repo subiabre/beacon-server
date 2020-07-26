@@ -57,7 +57,10 @@ class Player extends React.Component
         const time = event.target.currentTime;
 
         if (!this.bySocket.play) {
-            this.props.socket.emit('play:allSockets:time', time);
+            this.props.socket.emit('play:atSocket:time', {
+                socketId: this.props.target.id,
+                time: time
+            });
         }
 
         this.bySocket.play = false;
@@ -66,7 +69,10 @@ class Player extends React.Component
     handlePause = () =>
     {
         if (!this.bySocket.pause) {
-            this.props.socket.emit('pause:allSockets');
+            this.props.socket.emit('pause:atSocket', {
+                socketId: this.props.target.id,
+                song: this.state.song
+            });
         }
 
         this.bySocket.pause = false;
@@ -79,7 +85,10 @@ class Player extends React.Component
         }
 
         if (!this.bySocket.volume) {
-            this.props.socket.emit('volume:allSockets', volume)
+            this.props.socket.emit('volume:atSocket', {
+                socketId: this.props.target.id,
+                volume: volume
+            });
         }
 
         this.bySocket.volume = false;
