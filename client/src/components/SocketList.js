@@ -35,6 +35,18 @@ class SocketList extends React.Component
     {
         let sockets = this.state.sockets.map((socket) => {
             if (socket.id == this.socket.id) {
+                if (socket.id == this.state.origin.id) {
+                    return (
+                        <Socket
+                            io = {this.socket}
+                            socket = {socket}
+                            title = "Playing locally"
+                            className = "Socket Origin Current"
+                            getSocket = {this.props.getSocket}
+                        />
+                    )
+                }
+                
                 return (
                     <Socket
                         io = {this.socket}
