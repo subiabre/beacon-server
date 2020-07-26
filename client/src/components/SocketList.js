@@ -39,7 +39,7 @@ class SocketList extends React.Component
                     <Socket
                         io = {this.socket}
                         socket = {socket}
-                        title = "All sockets"
+                        title = "This is you"
                         className = "Socket Current"
                         getSocket = {this.props.getSocket}
                     />
