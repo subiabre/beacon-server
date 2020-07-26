@@ -11,6 +11,15 @@ class SearchResult extends React.Component
         }
     }
 
+    componentDidUpdate(prevProps)
+    {
+        if (prevProps.song.id !== this.props.song.id) {
+            this.setState({
+                song: this.props.song
+            });
+        }
+    }
+
     handleClick = () => {
         this.props.getSong(this.state.song);
     }
