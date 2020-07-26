@@ -24,18 +24,15 @@ class SearchList extends React.Component
     render()
     {
         return (
-            <React.Fragment>
+            <ul className = 'SearchResults'>
                 <h2>{this.state.results.length} Results</h2>
-                <hr/>
-                <ul className = 'SearchResults'>
-                    {this.state.results.map((result) => (
-                        <SearchResult 
-                            getSong = {this.props.getSong}
-                            song = {result}
-                        />
-                    ))}
-                </ul>
-            </React.Fragment>
+                {this.state.results.map((result) => (
+                    <SearchResult 
+                        getSong = {this.props.getSong}
+                        song = {result}
+                    />
+                ))}
+            </ul>
         )
     }
 }
