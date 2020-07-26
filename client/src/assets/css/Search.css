@@ -33,6 +33,14 @@
     flex-wrap: wrap;
 }
 
+.SearchResults h2 {
+    width: 100%;
+    margin: 0 1em;
+    color: #ffffff;
+    font-size: 1em;
+    text-align: left;
+}
+
 .SearchResult {
     width: calc(14vw - 4em);
     min-width: 200px;
