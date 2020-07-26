@@ -59,14 +59,34 @@ io.on('connection', (socket) => {
         io.emit('play:song', song);
     });
 
+    // Send time signal to certain socket
+    socket.on('play:atSocket:time', (data) => {
+        socket.broadcast.to(data.socketId).emit('play:time', data.time);
+    });
+
+    // Send time signal to all other sockets
+    socket.on('play:allSockets:time', (time) => {
+        socket.broadcast.emit('play:time', time);
+    });
+
     // Send pause signal to certain socket
     socket.on('pause:atSocket', (data) => {
-        io.to(data.socketId).emit('pause:song', data.song);
+        socket.broadcast.to(data.socketId).emit('pause', data.song);
     });
 
     // Send pause singal to all sockets
     socket.on('pause:allSockets', (song) => {
-        io.emit('pause:song', song);
+        socket.broadcast.emit('pause', song);
+    });
+
+    // Send volume signal to certain socket
+    socket.on('volume:atSocket', (data) => {
+        socket.broadcast.to(data.socketId).emit('volume', data.volume);
+    });
+
+    // Send volume signal to all sockets
+    socket.on('volume:allSockets', (volume) => {
+        socket.broadcast.emit('volume', volume);
     });
 });
 
