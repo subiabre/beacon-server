@@ -7,17 +7,44 @@ import './App.css';
 
 const SocketClient = Socket();
 
-function App() {
-  return (
-    <div className="App">
-      <Search socket = {SocketClient}/>
-      <SocketList socket = {SocketClient}/>
-      <Player 
-        socket = {SocketClient}
-        song = {{}}
-      />
-    </div>
-  );
+class App extends React.Component
+{
+  constructor(props)
+  {
+    super(props);
+
+    this.state = {
+      socketOrigin: SocketClient,
+      socketTarget: SocketClient
+    };
+  }
+
+  getSocket = (socket) =>
+  {
+    this.setState({
+      socketTarget: socket
+    }, () => {
+      console.log(this.state);
+    });
+  }
+
+  render()
+  {
+    return (
+      <div className="App">
+        <Search socket = {SocketClient}/>
+        <SocketList 
+          getSocket = {this.getSocket}
+          socket = {SocketClient}
+        />
+        <Player 
+          target = {this.state.socketTarget}
+          socket = {SocketClient}
+          song = {{}}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
