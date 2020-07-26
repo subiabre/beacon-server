@@ -12,9 +12,10 @@ class SearchList extends React.Component
         };
     }
 
-    componentDidUpdate(prevProps){
-        if(prevProps.results !== this.props.results){
-            this.setState({          
+    componentDidUpdate(prevProps)
+    {
+        if (prevProps.results.length !== this.props.results.length){
+            this.setState({
                 results: this.props.results
             });
         }
@@ -22,17 +23,19 @@ class SearchList extends React.Component
 
     render()
     {
-        const results = this.state.results;
-
         return (
-            <ul className = 'SearchResults'>
-                {results.map((result) => (
-                    <SearchResult 
-                        getSong = {this.props.getSong}
-                        song = {result}
-                    />
-                ))}
-            </ul>
+            <React.Fragment>
+                <h2>{this.state.results.length} Results</h2>
+                <hr/>
+                <ul className = 'SearchResults'>
+                    {this.state.results.map((result) => (
+                        <SearchResult 
+                            getSong = {this.props.getSong}
+                            song = {result}
+                        />
+                    ))}
+                </ul>
+            </React.Fragment>
         )
     }
 }
