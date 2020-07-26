@@ -1,4 +1,5 @@
 import React from 'react';
+import '../assets/css/Player.css';
 
 class Player extends React.Component
 {
@@ -107,15 +108,18 @@ class Player extends React.Component
 
         return (
             <React.Fragment>
-                <div>
+                <div className="Player">
                     <p className="Playing">Now playing:</p>
-                    <p> {this.state.song.name} </p>
+                    <p>{this.state.song.name}</p>
+                    <p>from {this.state.song.release} </p>
+                    <p>by {this.state.song.artist} </p>
                 </div>
                 <audio
                     ref = "audio"
                     onPlay = {this.handlePlay}
                     onPause = {this.handlePause}
                     onVolumeChange = {this.handleVolume}
+                    className = "PlayerAudio"
                     controls
                 >
                     <source
