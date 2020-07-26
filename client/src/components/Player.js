@@ -23,6 +23,13 @@ class Player extends React.Component
                 this.refs.audio.muted = true;
                 this.refs.audio.play();
                 this.refs.audio.muted = false;
+
+                if (this.props.target.id !== this.props.socket.id) {
+                    this.props.socket.emit('play:atSocket', {
+                        socketId: this.props.target.id,
+                        song: song
+                    });
+                }
             });
         });
 
