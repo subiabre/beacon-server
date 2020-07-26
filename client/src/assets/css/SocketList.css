@@ -21,3 +21,11 @@
 .SocketList .Socket.Current {
     background-color: #666;
 }
+
+.SocketList .Socket.Playing {
+    color: #adff2f;
+}
+
+.SocketList .Socket.Origin {
+    color: #7fffd4;
+}

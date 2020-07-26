@@ -1,4 +1,5 @@
 import React from 'react';
+import Socket from './Socket';
 import '../assets/css/SocketList.css';
 
 class SocketList extends React.Component
@@ -8,7 +9,8 @@ class SocketList extends React.Component
         super(props);
 
         this.state = {
-            sockets: []
+            sockets: [],
+            origin: {}
         };
 
         this.socket = props.socket;
@@ -21,42 +23,55 @@ class SocketList extends React.Component
                 sockets: sockets
             });
         });
-    }
 
-    socketLi(li)
-    {
-        const id = this.socket.id;
-        
-        if (li.id === id) {
-            return (
-                <li
-                    title = 'Current connection'
-                    className = 'Socket Current'
-                    key = {li.id}
-                >
-                    {li.userAgent.name} @ {li.userAgent.os} {li.userAgent.device_type}
-                </li>  
-            );
-        }
-
-        return (
-            <li
-                title = {li.id}
-                className = 'Socket'
-                key = {li.id}
-            >
-                {li.userAgent.name} @ {li.userAgent.os} {li.userAgent.device_type}
-            </li>
-        );
+        this.socket.on('socket:origin', (origin) => {
+            this.setState({
+                origin: origin
+            });
+        });
     }
 
     render()
     {
-        const sockets = this.state.sockets;
+        let sockets = this.state.sockets.map((socket) => {
+            if (socket.id == this.socket.id) {
+                return (
+                    <Socket
+                        io = {this.socket}
+                        socket = {socket}
+                        title = "All sockets"
+                        className = "Socket Current"
+                        getSocket = {this.props.getSocket}
+                    />
+                )
+            }
+
+            if (socket.id == this.state.origin.id) {
+                return (
+                    <Socket
+                        io = {this.socket}
+                        socket = {socket}
+                        title = "This socket is emitting to you"
+                        className = "Socket Origin"
+                        getSocket = {this.props.getSocket}
+                    />
+                )
+            }
+
+            return (
+                <Socket
+                    io = {this.socket}
+                    socket = {socket}
+                    title = "Play in this socket"
+                    className = "Socket"
+                    getSocket = {this.props.getSocket}
+                />
+            )
+        });
 
         return (
             <ul className = "SocketList">
-                {sockets.map((socket) => this.socketLi(socket))}
+                {sockets}
             </ul>
         );
     }
