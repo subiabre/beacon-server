@@ -106,19 +106,25 @@ class Player extends React.Component
         }
 
         return (
-            <audio
-                ref = "audio"
-                onPlay = {this.handlePlay}
-                onPause = {this.handlePause}
-                onVolumeChange = {this.handleVolume}
-                controls
-            >
-                <source
-                    src = {'/song/' + song.id + '/stream'}
-                    type = {song.mime}
+            <React.Fragment>
+                <div>
+                    <p className="Playing">Now playing:</p>
+                    <p> {this.state.song.name} </p>
+                </div>
+                <audio
+                    ref = "audio"
+                    onPlay = {this.handlePlay}
+                    onPause = {this.handlePause}
+                    onVolumeChange = {this.handleVolume}
+                    controls
                 >
-                </source>
-            </audio>
+                    <source
+                        src = {'/song/' + song.id + '/stream'}
+                        type = {song.mime}
+                    >
+                    </source>
+                </audio>
+            </React.Fragment>
         );
     }
 }
