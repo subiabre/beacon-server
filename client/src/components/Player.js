@@ -12,17 +12,9 @@ class Player extends React.Component
         }
     }
 
-    bySocket = {
-        play: false,
-        pause: false,
-        volume: false
-    };
-
     componentDidMount()
     {
         this.props.socket.on('play:song', (song) => {
-            this.bySocket.play = true;
-
             this.setState({
                 song: song
             }, () => {
@@ -35,21 +27,15 @@ class Player extends React.Component
         });
 
         this.props.socket.on('play:time', (time) => {
-            this.bySocket.play = true;
-
             this.refs.audio.currentTime = time;
             this.refs.audio.play();
         });
 
         this.props.socket.on('pause', () => {
-            this.bySocket.pause = true;
-
             this.refs.audio.pause();
         });
 
         this.props.socket.on('volume', (volume) => {
-            this.bySocket.volume = true;
-
             this.refs.audio.volume = volume.value;
             this.refs.audio.muted = volume.muted;
         });
@@ -59,26 +45,18 @@ class Player extends React.Component
     {
         const time = event.target.currentTime;
 
-        if (!this.bySocket.play) {
-            this.props.socket.emit('play:atSocket:time', {
-                socketId: this.props.target.id,
-                time: time
-            });
-        }
-
-        this.bySocket.play = false;
+        this.props.socket.emit('play:atSocket:time', {
+            socketId: this.props.target.id,
+            time: time
+        });
     }
 
     handlePause = () =>
     {
-        if (!this.bySocket.pause) {
-            this.props.socket.emit('pause:atSocket', {
-                socketId: this.props.target.id,
-                song: this.state.song
-            });
-        }
-
-        this.bySocket.pause = false;
+        this.props.socket.emit('pause:atSocket', {
+            socketId: this.props.target.id,
+            song: this.state.song
+        });
     }
 
     handleVolume = (event) => {
@@ -87,14 +65,10 @@ class Player extends React.Component
             muted: event.target.muted
         }
 
-        if (!this.bySocket.volume) {
-            this.props.socket.emit('volume:atSocket', {
-                socketId: this.props.target.id,
-                volume: volume
-            });
-        }
-
-        this.bySocket.volume = false;
+        this.props.socket.emit('volume:atSocket', {
+            socketId: this.props.target.id,
+            volume: volume
+        });
     }
 
     render()
