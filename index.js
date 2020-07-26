@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         let socketIndex = socketList.indexOf(socketMin);
 
-        socketList.splice(socketIndex);
+        socketList.splice(socketIndex, 1);
 
         io.emit('socket:update', socketList);
     });
